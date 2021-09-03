@@ -70,3 +70,32 @@ client.smembers('frameworkset', function(err:Error, reply: Array<String>){
 })
 
 // https://www.sitepoint.com/using-redis-node-js/
+
+// checking existence of key
+
+client.exists('frameworkset', function(err:Error, reply: number){
+    if(reply ==1){
+        console.log('EXITS')
+    }else {
+        console.log("Does not exist")
+    }
+})
+
+// deleting and expiring keys 
+
+client.del('frameworklist', function(err:Error, reply: number){
+    console.log(reply) 
+})
+
+client.set('status', 'loggedin')
+client.expire('status', 300); // after 5 minutes status will be deleted
+
+// incrementing and decrementing 
+
+client.set('working_days', 5, function(){
+    client.incr('working_days', function(err:Error, reply: number){
+        console.log(reply) // increment s to 6
+    })
+})
+
+// similarly we can use incrby , decrby , decr also | 
